@@ -9,8 +9,6 @@ pool:
 
 variables:
   repoUrl: 'https://github.com/JessicaHoi/e08g03t03-odoo17'
-  updateScript: '/home/azureuser/deploy-temp/update_code.sh'
-  stagePath: '/home/azureuser/'
 
 stages:
 
@@ -18,6 +16,9 @@ stages:
 # STAGING STAGE
 # =========================
 - stage: Staging
+  variables:
+    updateScript: '/home/azureuser/deploy-temp/update_code.sh'
+    stagePath: '/home/azureuser/'
   displayName: Deploy to Staging
   condition: eq(variables['Build.SourceBranchName'], 'Staging')
 
