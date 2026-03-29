@@ -63,6 +63,9 @@ stages:
 # PRODUCTION STAGE
 # =========================
 - stage: Production
+  variables:
+    stagePath: '/home/$(PROD_USERNAME)/'
+    updateScript: '/home/$(PROD_USERNAME)/deploy-temp/update_code.sh'
   displayName: Deploy to Production
   condition: eq(variables['Build.SourceBranchName'], 'master')
 
@@ -114,8 +117,8 @@ stages:
               runOptions: commands
               commands: |
                 set -e
-                echo "$(PRODUSERPASSWORD)" | sudo -S -p '' cp /home/azureuser/deploy-temp/restore_db.sh /tmp/
-                echo "$(PRODUSERPASSWORD)" | sudo -S -p '' cp /home/azureuser/deploy-temp/odoo.sql /tmp/
+                echo "$(PRODUSERPASSWORD)" | sudo -S -p '' cp /home/$(PROD_USERNAME)/deploy-temp/restore_db.sh /tmp/
+                echo "$(PRODUSERPASSWORD)" | sudo -S -p '' cp /home/$(PROD_USERNAME)/deploy-temp/odoo.sql /tmp/
 
                 echo "$(PRODUSERPASSWORD)" | sudo -S -p '' chmod +x /tmp/restore_db.sh
                 echo "$(PRODUSERPASSWORD)" | sudo -S -p '' chmod 644 /tmp/odoo.sql
